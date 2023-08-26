@@ -1,4 +1,4 @@
-package com.example.book_API
+package com.example.api
 
 
 import org.springframework.web.bind.annotation.GetMapping

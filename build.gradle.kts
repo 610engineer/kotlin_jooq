@@ -7,7 +7,6 @@ plugins {
 	kotlin("plugin.spring") version "1.8.22"
 	id("nu.studer.jooq") version "8.0"
 	id("org.flywaydb.flyway") version "8.0.1"
-
 }
 
 group = "com.example"
@@ -45,4 +44,40 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+jooq {
+	configurations {
+	        create("main") {
+	            jooqConfiguration.apply {
+	                jdbc.apply {
+	                    url = "jdbc:mysql://localhost:3306/library?enabledTLSProtocols=TLSv1.2"
+						user = "root"
+						password = "root"
+					}
+					generator.apply {
+						name = "org.jooq.codegen.KotlinGenerator"
+						database.apply {
+							name = "org.jooq.meta.mysql.MySQLDatabase"
+							inputSchema = "library"
+							excludes = "flyway_schema_history"
+						}
+						generate.apply {
+							isDeprecated = false
+							isTables = true
+						}
+						target.apply {
+							packageName = "com.example.ktknowledgeTodo.infra.jooq"
+							directory = "$buildDir/generated/source/jooq/main"
+						}
+					}
+				}
+			}
+	}
+}
+
+flyway {
+	url = "jdbc:mysql://localhost:3306/library?enabledTLSProtocols=TLSv1.2"
+	user = "root"
+	password = "root"
 }
