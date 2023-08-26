@@ -5,6 +5,9 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.3"
 	kotlin("jvm") version "1.8.22"
 	kotlin("plugin.spring") version "1.8.22"
+	id("nu.studer.jooq") version "8.0"
+	id("org.flywaydb.flyway") version "8.0.1"
+
 }
 
 group = "com.example"
@@ -27,6 +30,10 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	implementation("org.flywaydb:flyway-mysql")
+
+	jooqGenerator("com.mysql:mysql-connector-j")
+	jooqGenerator("jakarta.xml.bind:jakarta.xml.bind-api:4.0.0")
 }
 
 tasks.withType<KotlinCompile> {
