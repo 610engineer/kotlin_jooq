@@ -1,12 +1,11 @@
 package com.example.api
 
-import org.jooq.Record
-import org.jooq.Result
+import com.example.api.model.Book
 import org.springframework.stereotype.Service
 
 @Service
 class ApiService(private val apiRepository: ApiRepository){
-    fun getAllBooks(): List<Record> {
+    fun getAllBooks(): MutableList<Book> {
         return apiRepository.findAll()
     }
 }

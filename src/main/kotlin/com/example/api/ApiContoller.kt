@@ -1,8 +1,8 @@
 package com.example.api
 
 
+import com.example.api.model.Book
 import org.apache.commons.logging.LogFactory
-import org.jooq.Record
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 class ApiController( private val apiService: ApiService) {
     private val log = LogFactory.getLog(ApiController::class.java)
     @GetMapping("/all")
-    fun getAllBooks(): List<Record> {
+    fun getAllBooks(): MutableList<Book> {
         log.info("PASSED")
         return apiService.getAllBooks()
     }
