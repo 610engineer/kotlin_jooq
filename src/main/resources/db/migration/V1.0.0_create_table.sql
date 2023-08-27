@@ -8,3 +8,6 @@ CREATE TABLE IF NOT EXISTS `books` (
   `author` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
+
+INSERT into books values(0 , 'test_title_a', 'test_author_a');
+INSERT into books values(0 , 'test_title_b', 'test_author_b');
