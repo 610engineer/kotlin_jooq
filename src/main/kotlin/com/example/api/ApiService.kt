@@ -13,8 +13,8 @@ class ApiService(private val apiRepository: ApiRepository){
         return apiRepository.findById(id)
     }
 
-    fun insertItem(title: String, author: String): Book {
-        return apiRepository.insert(title, author)
+    fun insertItem(book:Book): Book {
+        return apiRepository.insert(book)
     }
 
     fun deleteTable(){

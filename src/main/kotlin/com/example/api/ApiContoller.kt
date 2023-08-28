@@ -20,8 +20,9 @@ class ApiController( private val apiService: ApiService) {
     }
 
     @PostMapping
-    fun createBook(@RequestBody title: String, @RequestBody author:String) :Book{
-        return apiService.insertItem(title, author)
+    fun createBook(@RequestBody book: Book) :Book{
+        System.out.print(book)
+        return apiService.insertItem(book)
     }
 
 

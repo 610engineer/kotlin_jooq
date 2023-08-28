@@ -23,10 +23,10 @@ class ApiRepository(private val dslContext: DSLContext){
             .fetchOne()?.let { toModel(it) }
     }
 
-    fun insert(title: String, author: String): Book {
+    fun insert(book:Book): Book {
         val record = dslContext.newRecord(BOOKS).also{
-            it.title = title
-            it.author = author
+            it.title = book.title
+            it.author = book.author
             it.store()
         }
         return Book(record.id!! , record.title!!, record.author!!)
