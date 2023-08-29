@@ -19,10 +19,19 @@ class ApiController( private val apiService: ApiService) {
         return apiService.getById(id)
     }
 
+    @GetMapping("/search")
+    fun getBookByAuthor(@RequestParam author: String): Book?{
+        return apiService.getByAuthor(author)
+    }
+
     @PostMapping
     fun createBook(@RequestBody book: Book) :Book{
-        System.out.print(book)
-        return apiService.insertItem(book)
+        return apiService.createBook(book)
+    }
+
+    @PutMapping("/{id}")
+    fun updateBook(@PathVariable id: Int,@RequestBody book: Book) : Book?{
+        return apiService.updateBook(id ,book)
     }
 
 

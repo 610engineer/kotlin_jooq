@@ -13,11 +13,16 @@ class ApiService(private val apiRepository: ApiRepository){
         return apiRepository.findById(id)
     }
 
-    fun insertItem(book:Book): Book {
-        return apiRepository.insert(book)
+    fun getByAuthor(author: String): Book? {
+        return apiRepository.findByAuthor(author)
     }
 
-    fun deleteTable(){
-        apiRepository.deleteAll()
+    fun createBook(book:Book): Book {
+        return apiRepository.createBook(book)
     }
+
+    fun updateBook(id: Int, book:Book): Book? {
+        return apiRepository.updateBook(id, book)
+    }
+
 }
