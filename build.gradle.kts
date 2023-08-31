@@ -30,9 +30,12 @@ dependencies {
 	runtimeOnly("com.mysql:mysql-connector-j")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation("org.flywaydb:flyway-mysql")
-
 	jooqGenerator("com.mysql:mysql-connector-j")
 	jooqGenerator("jakarta.xml.bind:jakarta.xml.bind-api:4.0.0")
+	implementation("com.github.database-rider:rider-core:1.34.0")
+	implementation("com.github.database-rider:rider-spring:1.34.0")
+	testImplementation("com.github.database-rider:rider-junit5:1.34.0")
+
 }
 
 tasks.withType<KotlinCompile> {

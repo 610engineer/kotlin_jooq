@@ -9,5 +9,8 @@ CREATE TABLE IF NOT EXISTS `books` (
   PRIMARY KEY (`id`)
 );
 
-INSERT into books values(0 , 'test_title_a', 'test_author_a');
-INSERT into books values(0 , 'test_title_b', 'test_author_b');
+INSERT into books values(0 , 'title_1', 'author_1');
+INSERT into books values(0 , 'title_2', 'author_2');
+INSERT into books values(0 , 'title_3', 'author_3');
+INSERT into books values(0 , 'title_4', 'author_4');
+INSERT into books values(0 , 'title_5', 'author_5');
