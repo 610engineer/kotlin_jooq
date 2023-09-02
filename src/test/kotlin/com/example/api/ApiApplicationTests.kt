@@ -35,7 +35,7 @@ class ApiApplicationTests {
 		value = ["datasets/common.yml"],
 		orderBy = ["id"]
 	)
-	fun getById_1Test() {
+	fun getByIdTest() {
 
 		var id = 1
 
@@ -122,6 +122,107 @@ class ApiApplicationTests {
 			)
 
 			id++
+		}
+	}
+
+	@Test
+	@DataSet("datasets/common.yml")
+	@ExpectedDataSet(
+		value = ["datasets/common.yml"],
+		orderBy = ["id"]
+	)
+	fun getByAuthorTest() {
+
+		var authors = arrayOf("author_1", "author_2", "author_3", "author_4", "author_5", "author_6")
+
+		var idx = 0;
+
+
+
+		while( idx < 5){
+			var author = authors[idx]
+			val response = mockMvc.perform(
+				get("/api/books/search?author=$author")
+					.contentType(MediaType.APPLICATION_JSON)
+			).andReturn().response
+			val actualStatus = response.status
+			val actualResponseBody = response.contentAsString
+
+			val expectedStatus = HttpStatus.OK.value()
+
+			val expectedResponseBody = when(idx){
+				0 -> """
+					{
+                     "status": 1,
+						"data": 
+							{
+								"id": 1,
+								"title": "title_1",
+								"author": "author_1"
+							}
+					}
+                """.trimIndent()
+				1 ->  """
+					{
+                     "status": 1,
+						"data": 
+							{
+								"id": 2,
+								"title": "title_2",
+								"author": "author_2"
+							}
+					}
+                """.trimIndent()
+				2 ->  """
+					{
+                     "status": 1,
+						"data": 
+							{
+								"id": 3,
+								"title": "title_3",
+								"author": "author_3"
+							}
+					}
+                """.trimIndent()
+				3 ->  """
+					{
+                     "status": 1,
+						"data": 
+							{
+								"id": 4,
+								"title": "title_4",
+								"author": "author_4"
+							}
+					}
+                """.trimIndent()
+				4 ->  """
+					{
+                     "status": 1,
+						"data": 
+							{
+								"id": 5,
+								"title": "title_5",
+								"author": "author_5"
+							}
+					}
+                """.trimIndent()
+
+				else -> """
+					{
+                     "status": 0,
+					 "message":"DATA_NOT_FOUND"
+					}
+                """.trimIndent()
+			}
+
+			Assertions.assertThat(actualStatus).isEqualTo(expectedStatus)
+			JSONAssert.assertEquals(
+				expectedResponseBody,
+				actualResponseBody,
+				JSONCompareMode.STRICT
+			)
+
+			idx++
 		}
 	}
 
