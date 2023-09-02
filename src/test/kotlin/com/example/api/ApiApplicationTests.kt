@@ -17,9 +17,8 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -259,6 +258,54 @@ class ApiApplicationTests {
 						"id" : 6,
 						"title" : "title_6",
 						"author" : "author_6"
+					}
+				}
+			""".trimIndent()
+
+		Assertions.assertThat(actualStatus).isEqualTo(expectedStatus)
+		JSONAssert.assertEquals(
+			expectedResponseBody,
+			actualResponseBody,
+			CustomComparator(
+				STRICT,
+				Customization("books.id"){_,_ -> true}
+			)
+		)
+	}
+
+	@Test
+	@DataSet("datasets/common.yml")
+	@ExpectedDataSet(
+		value = ["datasets/update_success.yml"],
+		orderBy = ["id"],
+		ignoreCols = ["id"]
+	)
+	fun updateTest(){
+		val rawRequestBody = """
+			{
+				"title": "test_title_4",
+				"author": "test_author_4"
+			}
+		""".trimIndent()
+
+		val response = mockMvc.perform(
+			put("/api/books/4")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(rawRequestBody)
+		).andReturn().response
+
+		val actualStatus = response.status
+		val actualResponseBody = response.contentAsString
+
+		val expectedStatus =  HttpStatus.OK.value()
+		val expectedResponseBody =
+			"""
+				{
+					"status": 1,
+					"data":{
+						"id" : 4,
+						"title" : "test_title_4",
+						"author" : "test_author_4"
 					}
 				}
 			""".trimIndent()
