@@ -48,6 +48,9 @@ class ApiApplicationTests {
 
 			val expectedStatus = HttpStatus.OK.value()
 
+			// id 1 ~ 7 までをテスト
+			// 1~5　正常系
+			// 6~7　異常系
 			val expectedResponseBody = when(id){
 				1 -> """
 					{
@@ -119,7 +122,7 @@ class ApiApplicationTests {
 				actualResponseBody,
 				JSONCompareMode.STRICT
 			)
-
+			// idをインクリメント
 			id++
 		}
 	}
@@ -132,11 +135,12 @@ class ApiApplicationTests {
 	)
 	fun getByAuthorTest() {
 
+		// テスト用のauthorを定義
+		// 1~5 正常系
+		// 6 異常系
 		var authors = arrayOf("author_1", "author_2", "author_3", "author_4", "author_5", "author_6")
 
 		var idx = 0;
-
-
 
 		while( idx < 5){
 			var author = authors[idx]
@@ -220,7 +224,7 @@ class ApiApplicationTests {
 				actualResponseBody,
 				JSONCompareMode.STRICT
 			)
-
+			// authorsのインデックスをインクリメント
 			idx++
 		}
 	}
@@ -233,6 +237,8 @@ class ApiApplicationTests {
 		ignoreCols = ["id"]
 	)
 	fun insertTest(){
+
+		// insertのrequestBody
 		val rawRequestBody = """
 			{
 				"title": "title_6",
@@ -240,6 +246,7 @@ class ApiApplicationTests {
 			}
 		""".trimIndent()
 
+		// POSTリクエスト
 		val response = mockMvc.perform(
 			post("/api/books")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -249,7 +256,10 @@ class ApiApplicationTests {
 		val actualStatus = response.status
 		val actualResponseBody = response.contentAsString
 
+		// ステータスコードの期待値
 		val expectedStatus =  HttpStatus.OK.value()
+
+		// response bodyの期待値
 		val expectedResponseBody =
 			"""
 				{
@@ -281,6 +291,8 @@ class ApiApplicationTests {
 		ignoreCols = ["id"]
 	)
 	fun updateTest(){
+
+		// 更新内容のrequest body
 		val rawRequestBody = """
 			{
 				"title": "test_title_4",
@@ -288,6 +300,7 @@ class ApiApplicationTests {
 			}
 		""".trimIndent()
 
+		// PUTリクエスト
 		val response = mockMvc.perform(
 			put("/api/books/4")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -297,7 +310,10 @@ class ApiApplicationTests {
 		val actualStatus = response.status
 		val actualResponseBody = response.contentAsString
 
+		// ステータスコードの期待値
 		val expectedStatus =  HttpStatus.OK.value()
+
+		// response bodyの期待値
 		val expectedResponseBody =
 			"""
 				{
